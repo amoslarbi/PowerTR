@@ -1,8 +1,10 @@
 package teamragnar.power;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +14,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ListView listView;
+    String[] hello = {"Hello"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +38,11 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        listView = (ListView) findViewById(R.id.listview);
+        MyCustomAdapter adapter = new MyCustomAdapter(this, hello);
+        listView.setAdapter(adapter);
+
+        //list = new ArrayList<String>(Arrays.asList("111,222,333,444,555,666".split(",")));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -32,6 +52,54 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    class MyCustomAdapter extends ArrayAdapter{
+
+        String[] hellooArray;
+
+        public MyCustomAdapter(Context c, String[] hello1){
+            super(c, R.layout.customlayout, R.id.textView, hello1);
+            this.hellooArray=hello1;
+
+        }
+
+        @NotNull
+        @Override
+        public View getView( int position, View convertView, ViewGroup parent) {
+            View view = convertView;
+            //if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.customlayout, parent, false);
+           // }
+
+        TextView mytextView= (TextView)view.findViewById(R.id.textView);
+//        tvContact.setText(list.get(position));
+
+            //Handle buttons and add onClickListeners
+           // Switch callbtn = (Switch) view.findViewById(R.id.swtch);
+
+            mytextView.setText(hellooArray[position]);
+//
+//            callbtn.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v) {
+//                    //do something
+//
+//                }
+//            });
+//        addBtn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                //do something
+//                notifyDataSetChanged();
+//
+//            }
+//        });
+
+            return view;
+        }
+
     }
 
     @Override
