@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class Page extends AppCompatActivity {
 
-EditText editText;
+    EditText editText;
     FloatingActionButton fab;
 
     @Override
@@ -35,7 +35,7 @@ EditText editText;
                 String send = editText.getText().toString().trim();
                 if(TextUtils.isDigitsOnly(send)){
 
-                    Intent startMainScreen = new Intent(getApplicationContext(),Page.class);
+                    Intent startMainScreen = new Intent(getApplicationContext(),Home.class);
                     startActivity(startMainScreen);
 
                 }else {
@@ -47,12 +47,10 @@ EditText editText;
                                 public void onClick(View view) {
 
                                 }
-
                             });
 
                             snack.show();
-
-                    }
+                }
                     //Toast.makeText(this,"", Toast.LENGTH_SHORT)
                 }
 

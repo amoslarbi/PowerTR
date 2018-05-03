@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String hello = "hellol";
     public static final String Namess = "hello world";
+//    EditText editText;
+//    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +137,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        fab = (FloatingActionButton) findViewById(R.id.fab);
+//        editText = (EditText) findViewById(R.id.editText);
 
+//        fab.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                String send = editText.getText().toString().trim();
+//                if(TextUtils.isDigitsOnly(send)){
+//
+//                    Intent startMainScreen = new Intent(getApplicationContext(),Page.class);
+//                    startActivity(startMainScreen);
+//
+//                }else {
+//
+//                    Snackbar snack = Snackbar.make(findViewById(R.id.idLayout), "Please Enter Integer Only", Snackbar.LENGTH_SHORT)
+//                            .setAction("RETRY", new View.OnClickListener() {
+//
+//                                @Override
+//                                public void onClick(View view) {
+//
+//                                }
+//                            });
+//
+//                    snack.show();
+//                }
+//                //Toast.makeText(this,"", Toast.LENGTH_SHORT)
+//            }
+//
+//
+//        });
 
     }
 

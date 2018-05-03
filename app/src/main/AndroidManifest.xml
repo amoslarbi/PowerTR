@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
 
-
     <receiver
         android:name=".SmsBroadcastReceiver"
         android:exported="true">
@@ -26,9 +25,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/socket1"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-       >
-
+        android:theme="@style/AppTheme">
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -36,14 +33,12 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths"/>
+                android:resource="@xml/filepaths" />
         </provider>
-
 
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
@@ -51,34 +46,38 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".Page"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing">
-
-        </activity>
-
+            android:windowSoftInputMode="adjustNothing"></activity>
         <activity
             android:name=".Terms"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing">
-
-        </activity>
-
+            android:windowSoftInputMode="adjustNothing"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing">
+            android:windowSoftInputMode="adjustNothing"></activity>
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme">
+
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:screenOrientation="portrait" />
+
+            </intent-filter>
 
         </activity>
-
-        <service android:name=".MyService"
-            android:enabled="true"
-            android:exported="true"></service>
-
     </application>
 
 </manifest>
