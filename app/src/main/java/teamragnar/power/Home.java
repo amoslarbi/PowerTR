@@ -4,6 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.text.Layout;
+import android.text.TextUtils;
+import android.util.SparseBooleanArray;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,10 +20,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +38,9 @@ public class Home extends AppCompatActivity
 
     ListView listView;
     String[] hello = {"Hello"};
+    FloatingActionButton aboutback;
+    EditText editText;
+    ArrayList itemlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +50,79 @@ public class Home extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.listview);
-        MyCustomAdapter adapter = new MyCustomAdapter(this, hello);
+        itemlist = new ArrayList<>();
+
+        final ArrayAdapter adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_multiple_choice, itemlist);
         listView.setAdapter(adapter);
+
+        aboutback  = (FloatingActionButton) findViewById(R.id.forward);
+
+        aboutback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder sett = new AlertDialog.Builder(Home.this);
+                final View mview = getLayoutInflater().inflate(R.layout.addapp,null);
+                 editText = (EditText) mview.findViewById(R.id.editText);
+                FloatingActionButton sposted = (FloatingActionButton) mview.findViewById(R.id.button3);
+
+                sposted.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String str3 = editText.getText().toString();
+
+                        if (TextUtils.isEmpty(str3)) {
+                            editText.setError("Field cant be Empty");
+                            editText.requestFocus();
+                            return;
+                        }
+
+                        else{
+
+                            itemlist.add(editText.getText().toString());
+                            editText.setText("");
+                            adapter.notifyDataSetChanged();
+                            //mview.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Appliance Added", Toast.LENGTH_SHORT).show();
+                            editText.setText("");
+                        }
+                    }
+                });
+
+                sett.setView(mview);
+                AlertDialog dialog = sett.create();
+                dialog.show();
+
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                SparseBooleanArray positionc = listView.getCheckedItemPositions();
+
+                int count = listView.getCount();
+                for(int item = count -1; item >=0; item--) {
+
+                    if (positionc.get(item)) {
+
+                        adapter.remove(itemlist.get(item));
+
+                    }
+
+                }
+                positionc.clear();
+
+                adapter.notifyDataSetChanged();
+
+                return false;
+            }
+        });
+
+
+        //MyCustomAdapter adapter = new MyCustomAdapter(this, hello);
+        //
 
         //list = new ArrayList<String>(Arrays.asList("111,222,333,444,555,666".split(",")));
 
@@ -54,53 +136,71 @@ public class Home extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    class MyCustomAdapter extends ArrayAdapter{
-
-        String[] hellooArray;
-
-        public MyCustomAdapter(Context c, String[] hello1){
-            super(c, R.layout.customlayout, R.id.textView, hello1);
-            this.hellooArray=hello1;
-
-        }
-
-        @NotNull
-        @Override
-        public View getView( int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            //if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.customlayout, parent, false);
-           // }
-
-        TextView mytextView= (TextView)view.findViewById(R.id.textView);
-//        tvContact.setText(list.get(position));
-
-            //Handle buttons and add onClickListeners
-           // Switch callbtn = (Switch) view.findViewById(R.id.swtch);
-
-            mytextView.setText(hellooArray[position]);
-//
-//            callbtn.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//                    //do something
-//
-//                }
-//            });
-//        addBtn.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                //do something
-//                notifyDataSetChanged();
-//
-//            }
-//        });
-
-            return view;
-        }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Appliance Added");
+        menu.add(0,v.getId(),0,"Delete");
 
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        if (item.getTitle() == "Delete"){
+
+
+        }
+
+       return true;
+    }
+
+//    class MyCustomAdapter extends ArrayAdapter{
+//
+//        String[] hellooArray;
+//
+//        public MyCustomAdapter(Context c, String[] hello1){
+//            super(c, R.layout.customlayout, R.id.textView, hello1);
+//            this.hellooArray=hello1;
+//
+//        }
+//
+//        @NotNull
+//        @Override
+//        public View getView( int position, View convertView, ViewGroup parent) {
+//            View view = convertView;
+//            //if (view == null) {
+//                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            view = inflater.inflate(R.layout.customlayout, parent, false);
+//           // }
+//
+//        TextView mytextView= (TextView)view.findViewById(R.id.textView);
+////        tvContact.setText(list.get(position));
+//
+//            //Handle buttons and add onClickListeners
+//           // Switch callbtn = (Switch) view.findViewById(R.id.swtch);
+//
+//            mytextView.setText(hellooArray[position]);
+////
+////            callbtn.setOnClickListener(new View.OnClickListener(){
+////                @Override
+////                public void onClick(View v) {
+////                    //do something
+////
+////                }
+////            });
+////        addBtn.setOnClickListener(new View.OnClickListener(){
+////            @Override
+////            public void onClick(View v) {
+////                //do something
+////                notifyDataSetChanged();
+////
+////            }
+////        });
+//
+//            return view;
+//        }
+
+    //}
 
     @Override
     public void onBackPressed() {
