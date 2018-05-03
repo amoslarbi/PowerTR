@@ -1,160 +1,261 @@
 package teamragnar.power;
 
-import android.Manifest;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    FloatingActionButton next1;
+    private TextView textView;
+    private Button nGoogleBtn;
+    private static final int RC_SIGN_IN = 1;
+    private GoogleApiClient nGoogleApiClient;
+    private FirebaseAuth nAuth;
+    private static final String TAG = "MAIN_ACTIVITY";
+    private FirebaseAuth.AuthStateListener nAuthListener;
 
-    ArrayList<String> smsMessagesList = new ArrayList<>();
-    ListView messages;
-    ArrayAdapter arrayAdapter;
-    EditText input;
-    SmsManager smsManager = SmsManager.getDefault();
-    private static MainActivity inst;
+    CircularProgressButton hy;
+    private TextView Name, Email, nid, larry;
+    String selectedPhoto;
+    Uri imageUri;
+    Bitmap bitmap;
+    RelativeLayout goog;
+    Animation rotate;
 
-    private static final int READ_SMS_PERMISSIONS_REQUEST = 1;
+    public static final String hello = "hellol";
+    public static final String Namess = "hello world";
 
-    public static MainActivity instance() {
-        return inst;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        inst = this;
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        next1 = (FloatingActionButton) findViewById(R.id.next1);
-        input = (EditText) findViewById(R.id.input);
+        Name = (TextView) findViewById(R.id.name);
+        Email = (TextView) findViewById(R.id.email);
+        nid = (TextView) findViewById(R.id.nid);
+        larry = (TextView) findViewById(R.id.larry);
 
-        next1.setOnClickListener(new View.OnClickListener() {
+        nAuth = FirebaseAuth.getInstance();
+        nAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                if(firebaseAuth.getCurrentUser() != null){
+                    startActivity(new Intent(MainActivity.this, Page.class));
+                    Intent intent = new Intent(MainActivity.this, Page.class);
+
+                    String lolo = Name.getText().toString();
+                    String lolos = Email.getText().toString();
+                    String loloss = nid.getText().toString();
+                    String lolosss = larry.getText().toString();
+
+                    intent.putExtra("nm",lolo);
+                    intent.putExtra("em",lolos);
+                    intent.putExtra("id",loloss);
+                    intent.putExtra("larry",lolosss);
+
+                    startActivity(intent);
+
+                }
+
+            }
+        };
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+
+                //fetch default_web_client_id and put it in my phpmyadmin UID table.
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        nGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Toast.makeText(MainActivity.this, "You Got an Error", Toast.LENGTH_LONG).show();
+
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        hy = (CircularProgressButton) findViewById(R.id.hy);
+        hy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.SEND_SMS)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    getPermissionToReadSMS();
-                } else {
-                    smsManager.sendTextMessage("+233203359241", null, input.getText().toString(), null, null);
-                    Toast.makeText(MainActivity.this, "Message sent!", Toast.LENGTH_SHORT).show();
-                }
+                hy.startAnimation();
 
-//                Intent StartIntent = new Intent(getApplicationContext(), Page.class);
-//                startActivity(StartIntent);
+                signIn();
+
+            }
+
+        });
+
+
+        textView = (TextView) findViewById(R.id.textView7);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent StartIntent = new Intent(getApplicationContext(), Terms.class);
+                startActivity(StartIntent);
 
             }
         });
 
 
-        //messages = (ListView) findViewById(R.id.messages);
 
-
-//        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, smsMessagesList);
-//        messages.setAdapter(arrayAdapter);
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            getPermissionToReadSMS();
-//        } else {
-//            refreshSmsInbox();
-//        }
-
-    }
-
-//    public void updateInbox(final String smsMessage) {
-//        arrayAdapter.insert(smsMessage, 0);
-//        arrayAdapter.notifyDataSetChanged();
-//    }
-
-    public void onSendClick(View view) {
-
-
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void getPermissionToReadSMS() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.READ_SMS)) {
-                Toast.makeText(this, "Please allow permission!", Toast.LENGTH_SHORT).show();
-            }
-            requestPermissions(new String[]{Manifest.permission.READ_SMS},
-                    READ_SMS_PERMISSIONS_REQUEST);
-        }
     }
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
-        // Make sure it's our original READ_CONTACTS request
-        if (requestCode == READ_SMS_PERMISSIONS_REQUEST) {
-            if (grantResults.length == 1 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Read SMS permission granted", Toast.LENGTH_SHORT).show();
-               // refreshSmsInbox();
-            } else {
-                Toast.makeText(this, "Read SMS permission denied", Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+    protected void onStart() {
+        super.onStart();
+        nAuth.addAuthStateListener(nAuthListener);
 
 
 
     }
 
-//    public void refreshSmsInbox() {
-//        ContentResolver contentResolver = getContentResolver();
-//        Cursor smsInboxCursor = contentResolver.query(Uri.parse("content://sms/inbox"), null, null, null, null);
-//        int indexBody = smsInboxCursor.getColumnIndex("body");
-//        int indexAddress = smsInboxCursor.getColumnIndex("address");
-//        if (indexBody < 0 || !smsInboxCursor.moveToFirst()) return;
-//        arrayAdapter.clear();
-//        do {
-//            String str = "SMS From: " + smsInboxCursor.getString(indexAddress) +
-//                    "\n" + smsInboxCursor.getString(indexBody) + "\n";
-//            arrayAdapter.add(str);
-//        } while (smsInboxCursor.moveToNext());
-////messages.setSelection(arrayAdapter.getCount() - 1);
-//    }
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(nGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            //Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = result.getSignInAccount();
+                firebaseAuthWithGoogle(account);
+                String name = account.getDisplayName();
+                String email = account.getEmail();
+                String Id = account.getId();
+                Uri Photo = account.getPhotoUrl();
+
+                String stringUri;
+                stringUri = Photo.toString();
+                Log.d(TAG, stringUri);
+
+                SharedPreferences sh = getSharedPreferences(hello , 0);
+                SharedPreferences.Editor edit = sh.edit();
+                edit.putString("nmm",name);
+                edit.putString("nmma",email);
+                edit.putString("nmmaa",stringUri);
+
+                Name.setText(name);
+                Email.setText(email);
+                larry.setText(stringUri);
+                nid.setText(Id);
+
+                edit.commit();
+
+
+
+
+
+
+            } else {
+                Log.d(TAG, String.valueOf(result));
+                Toast.makeText(MainActivity.this, "Sorry Authentication Failed...",
+                        Toast.LENGTH_SHORT).show();
+                hy.stopAnimation();
+                Intent intent = new Intent(MainActivity.this,MainActivity.class);
+
+                startActivity(intent);
+                //GoogleSignIn failed, Update Contacts.Intents.UI appropriately
+                // ...
+            }
+        }
+
+
+    }
+
+
+
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        nAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = nAuth.getCurrentUser();
+
+
+
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Sorry Authentication Failed..",
+                                    Toast.LENGTH_SHORT).show();
 //
+                            hy.stopAnimation();
+                            Intent intent = new Intent(MainActivity.this,MainActivity.class);
+
+                            startActivity(intent);
+
+                        }
+
+                        // ...
+                    }
+
+                    private void updateUI(FirebaseUser user) {
 
 
+                    }
+                });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 
 
 }

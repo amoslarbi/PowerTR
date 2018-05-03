@@ -2,7 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/idLayout"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,7 +89,7 @@
                 android:layout_marginRight="8dip"
                 android:ems="10"
                 android:hint="Input socket Number"
-                android:inputType="number"
+                android:inputType="phone"
 
                 />
 
