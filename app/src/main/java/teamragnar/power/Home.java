@@ -72,7 +72,7 @@ public class Home extends AppCompatActivity
         listView = (ListView) findViewById(R.id.listview);
         itemlist = new ArrayList<>();
 
-        adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_multiple_choice, itemlist);
+        adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_1, itemlist);
         listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
@@ -137,30 +137,30 @@ public class Home extends AppCompatActivity
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                SparseBooleanArray positionc = listView.getCheckedItemPositions();
-
-                int count = listView.getCount();
-                for(int item = count -1; item >=0; item--) {
-
-                    if (positionc.get(item)) {
-
-                        adapter.remove(itemlist.get(item));
-
-                    }
-
-                }
-                positionc.clear();
-
-                adapter.notifyDataSetChanged();
-
-                return false;
-
-
-            }
-        });
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                SparseBooleanArray positionc = listView.getCheckedItemPositions();
+//
+//                int count = listView.getCount();
+//                for(int item = count -1; item >=0; item--) {
+//
+//                    if (positionc.get(item)) {
+//
+//                        adapter.remove(itemlist.get(item));
+//
+//                    }
+//
+//                }
+//                positionc.clear();
+//
+//                adapter.notifyDataSetChanged();
+//
+//                return false;
+//
+//
+//            }
+//        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -176,7 +176,7 @@ public class Home extends AppCompatActivity
         });
 
 //        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            //@Override
+//            @Override
 //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 //
 //                    AlertDialog.Builder adb = new AlertDialog.Builder(Home.this);
@@ -200,7 +200,7 @@ public class Home extends AppCompatActivity
 //            }
 //
 //            });
-//
+
 
         //MyCustomAdapter adapter = new MyCustomAdapter(this, hello);
         //
@@ -259,37 +259,29 @@ public class Home extends AppCompatActivity
         return false;
     }
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        menu.setHeaderTitle("Appliance Added");
-//        menu.add(0,v.getId(),0,"Delete");
-//
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item){
-//        if (item.getTitle() == "Delete"){
-//            int count = listView.getCount();
-//            for(int items = count -1; items >=0; items--) {
-//
-//                if (menu.get(items)) {
-//
-//                    adapter.remove(itemlist.get(items));
-//
-////                }
-////
-//           }
-////            positionc.clear();
-//
-//            adapter.notifyDataSetChanged();
-//
-//            return false;
-//
-//        }
-//
-//       return true;
-//    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Tap to Delete Appliance");
+        menu.add(0,v.getId(),0,"Delete");
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+        if (item.getTitle() == "Delete"){
+
+            itemlist.remove(info.position);
+            adapter.notifyDataSetChanged();
+
+        }
+
+            return super.onContextItemSelected(item);
+
+
+    }
 
 //    class MyCustomAdapter extends ArrayAdapter{
 //
