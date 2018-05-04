@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if(firebaseAuth.getCurrentUser() != null){
-                    startActivity(new Intent(MainActivity.this, Page.class));
-                    Intent intent = new Intent(MainActivity.this, Page.class);
+                    startActivity(new Intent(MainActivity.this, Home.class));
+                    Intent intent = new Intent(MainActivity.this, Home.class);
 
                     String lolo = Name.getText().toString();
                     String lolos = Email.getText().toString();
@@ -221,10 +221,6 @@ public class MainActivity extends AppCompatActivity {
                 nid.setText(Id);
 
                 edit.commit();
-
-
-
-
 
 
             } else {

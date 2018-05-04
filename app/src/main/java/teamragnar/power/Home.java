@@ -1,10 +1,18 @@
 package teamragnar.power;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.app.SearchManager;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
@@ -23,10 +31,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,13 +46,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     ListView listView;
-    String[] hello = {"Hello"};
+    SearchView search;
     FloatingActionButton aboutback;
-    EditText editText;
-    ArrayList itemlist;
+    EditText editText, editText1;
+    ArrayList<String> itemlist;
+    ArrayAdapter<String> adapter;
+
+    private TextView names, wtf, hoover, larry;
+    Uri imageUri;
+    ImageView Uimmg;
+    public static final String hello = "hellol";
+    private FirebaseAuth nAuth;
+    private FirebaseAuth.AuthStateListener nAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +72,13 @@ public class Home extends AppCompatActivity
         listView = (ListView) findViewById(R.id.listview);
         itemlist = new ArrayList<>();
 
-        final ArrayAdapter adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_multiple_choice, itemlist);
+        adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_multiple_choice, itemlist);
         listView.setAdapter(adapter);
+
+        registerForContextMenu(listView);
+
+        search = (SearchView) findViewById(R.id.search);
+        search.setOnQueryTextListener(this);
 
         aboutback  = (FloatingActionButton) findViewById(R.id.forward);
 
@@ -64,6 +89,7 @@ public class Home extends AppCompatActivity
                 AlertDialog.Builder sett = new AlertDialog.Builder(Home.this);
                 final View mview = getLayoutInflater().inflate(R.layout.addapp,null);
                  editText = (EditText) mview.findViewById(R.id.editText);
+                 editText1 = (EditText) mview.findViewById(R.id.num);
                 FloatingActionButton sposted = (FloatingActionButton) mview.findViewById(R.id.button3);
 
                 sposted.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +97,8 @@ public class Home extends AppCompatActivity
                     public void onClick(View v) {
 
                         String str3 = editText.getText().toString();
+                        String send = editText1.getText().toString().trim();
+                        String send1 = editText1.getText().toString();
 
                         if (TextUtils.isEmpty(str3)) {
                             editText.setError("Field cant be Empty");
@@ -78,15 +106,27 @@ public class Home extends AppCompatActivity
                             return;
                         }
 
+                        if (TextUtils.isEmpty(send1)) {
+                            editText1.setError("Field cant be Empty");
+                            editText1.requestFocus();
+                            return;
+                        }
+
+//                        if(TextUtils.isDigitsOnly(send)){
+//
+//
+//                        }
+
                         else{
 
                             itemlist.add(editText.getText().toString());
                             editText.setText("");
                             adapter.notifyDataSetChanged();
-                            //mview.setVisibility(View.GONE);
                             Toast.makeText(getApplicationContext(), "Appliance Added", Toast.LENGTH_SHORT).show();
                             editText.setText("");
+                            editText1.setText("");
                         }
+
                     }
                 });
 
@@ -117,9 +157,50 @@ public class Home extends AppCompatActivity
                 adapter.notifyDataSetChanged();
 
                 return false;
+
+
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+
+                String food = String.valueOf(parent.getItemAtPosition(position));
+                Toast.makeText(getApplicationContext(), food, Toast.LENGTH_SHORT).show();
+                Intent StartIntent = new Intent(getApplicationContext(), Main2Activity.class);
+                startActivity(StartIntent);
+
+            }
+
+        });
+
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            //@Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                    AlertDialog.Builder adb = new AlertDialog.Builder(Home.this);
+//                    adb.setTitle("Delete");
+//                    adb.setMessage("Are you sure you want to delete" + position);
+//                    final int positionremove = position;
+//                    adb.setNegativeButton("Cancel", null);
+//                    adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            itemlist.remove(positionremove);
+//                            adapter.notifyDataSetChanged();
+//
+//                        }
+//                    });
+//
+//                    adb.show();
+//
+//                    //return false;
+//
+//                return false;
+//            }
+//
+//            });
+//
 
         //MyCustomAdapter adapter = new MyCustomAdapter(this, hello);
         //
@@ -132,27 +213,83 @@ public class Home extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        View hvv = nav.getHeaderView(0);
+
+        names = (TextView) hvv.findViewById(R.id.name);
+        wtf = (TextView) hvv.findViewById(R.id.email);
+        Uimmg = (ImageView) hvv.findViewById(R.id.Uimmg);
+
+//        names = (TextView) findViewById(R.id.name);
+//        wtf = (TextView) findViewById(R.id.email);
+        hoover = (TextView) findViewById(R.id.hoover);
+
+        names.setText(getIntent().getStringExtra("nm"));
+        wtf.setText(getIntent().getStringExtra("em"));
+        //hoover.setText(getIntent().getStringExtra("larry"));
+
+        SharedPreferences sh = getSharedPreferences(hello, 0);
+        names.setText(sh.getString("nmm", "nmoo"));
+        wtf.setText(sh.getString("nmma", "nmoo1"));
+        hoover.setText(sh.getString("nmmaa", "nmoo2"));
+
+        String lolo = hoover.getText().toString();
+
+        Uri c = Uri.parse(lolo);
+        Picasso.with(getApplicationContext()).load(c).into(Uimmg);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Appliance Added");
-        menu.add(0,v.getId(),0,"Delete");
+
 
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item){
-        if (item.getTitle() == "Delete"){
+    public boolean onQueryTextSubmit(String query){
+        return false;
 
-
-        }
-
-       return true;
     }
+
+    @Override
+    public boolean onQueryTextChange(String newText){
+        String text = newText;
+        adapter.getFilter().filter(newText);
+
+        return false;
+    }
+
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        menu.setHeaderTitle("Appliance Added");
+//        menu.add(0,v.getId(),0,"Delete");
+//
+//    }
+//
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item){
+//        if (item.getTitle() == "Delete"){
+//            int count = listView.getCount();
+//            for(int items = count -1; items >=0; items--) {
+//
+//                if (menu.get(items)) {
+//
+//                    adapter.remove(itemlist.get(items));
+//
+////                }
+////
+//           }
+////            positionc.clear();
+//
+//            adapter.notifyDataSetChanged();
+//
+//            return false;
+//
+//        }
+//
+//       return true;
+//    }
 
 //    class MyCustomAdapter extends ArrayAdapter{
 //
@@ -212,28 +349,6 @@ public class Home extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -253,5 +368,12 @@ public class Home extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+
+
     }
 }

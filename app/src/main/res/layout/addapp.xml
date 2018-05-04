@@ -78,7 +78,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="210dp"
             android:layout_marginLeft="12dip"
             android:layout_marginRight="12dip"
             android:id="@+id/relativeLayout"
@@ -95,11 +95,26 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
+                android:layout_marginBottom="10dip"
                 android:ems="10"
                 android:hint="Add Appliance"
                 android:inputType="textPersonName"
 
                 />
+
+            <EditText
+                android:id="@+id/num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editText"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:ems="10"
+                android:hint="Input socket Number"
+                android:inputType="phone"
+
+                />
+
 
             <!--<Button-->
                 <!--android:id="@+id/button3"-->
@@ -127,6 +142,19 @@
             android:paddingRight="10dp"
 
             >
+
+            <ImageView
+                android:id="@+id/lolo"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:src="@drawable/socket1"
+                android:layout_marginRight="12dip"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+
+
+                />
+
 
         </RelativeLayout>
 
