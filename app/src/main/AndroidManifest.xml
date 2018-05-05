@@ -40,7 +40,6 @@
             android:name=".SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -53,10 +52,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
-        <!--<service-->
-            <!--android:name=".MyService"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="true" />-->
+         <service
+         android:name=".MyService"
+         android:enabled="true"
+         android:exported="true" />
 
         <activity
             android:name=".Home"
@@ -70,11 +69,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:name=".Play"
+            android:label="@string/title_activity_play"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

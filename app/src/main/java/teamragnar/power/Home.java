@@ -168,7 +168,7 @@ public class Home extends AppCompatActivity
 
                 String food = String.valueOf(parent.getItemAtPosition(position));
                 Toast.makeText(getApplicationContext(), food, Toast.LENGTH_SHORT).show();
-                Intent StartIntent = new Intent(getApplicationContext(), Main2Activity.class);
+                Intent StartIntent = new Intent(getApplicationContext(), Play.class);
                 startActivity(StartIntent);
 
             }
