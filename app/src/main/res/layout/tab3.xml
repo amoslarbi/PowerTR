@@ -21,12 +21,12 @@
           android:layout_height="wrap_content"/>
    </LinearLayout>
 
-   <Chronometer
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:countDown="true"
-       android:id="@+id/ch"
-       />
+   <!--<Chronometer-->
+       <!--android:layout_width="wrap_content"-->
+       <!--android:layout_height="wrap_content"-->
+       <!--android:countDown="true"-->
+       <!--android:id="@+id/ch"-->
+       <!--/>-->
 
    <TextView
        android:id="@+id/tx"
@@ -45,6 +45,13 @@
        android:layout_centerHorizontal="true"
        android:layout_marginTop="107dp"
        android:text="TextView" />
+
+   <com.jjoe64.graphview.GraphView
+       android:layout_width="match_parent"
+       android:layout_height="200dip"
+       android:id="@+id/graph"
+       android:layout_below="@+id/cou"
+       />
 
 
 </RelativeLayout>

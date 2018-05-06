@@ -53,7 +53,9 @@ public class Home extends AppCompatActivity
     FloatingActionButton aboutback;
     EditText editText, editText1;
     ArrayList<String> itemlist;
-    ArrayAdapter<String> adapter;
+    String [] tt = {"hellol"};
+    //ArrayAdapter<String> adapter;
+    MyAdapter adapter;
 
     private TextView names, wtf, hoover, larry;
     Uri imageUri;
@@ -72,7 +74,8 @@ public class Home extends AppCompatActivity
         listView = (ListView) findViewById(R.id.listview);
         itemlist = new ArrayList<>();
 
-        adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_1, itemlist);
+        //adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_1, itemlist);
+        adapter = new MyAdapter(getApplicationContext(), itemlist);
         listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
@@ -81,7 +84,6 @@ public class Home extends AppCompatActivity
         search.setOnQueryTextListener(this);
 
         aboutback  = (FloatingActionButton) findViewById(R.id.forward);
-
         aboutback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,32 +177,6 @@ public class Home extends AppCompatActivity
 
         });
 
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                    AlertDialog.Builder adb = new AlertDialog.Builder(Home.this);
-//                    adb.setTitle("Delete");
-//                    adb.setMessage("Are you sure you want to delete" + position);
-//                    final int positionremove = position;
-//                    adb.setNegativeButton("Cancel", null);
-//                    adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            itemlist.remove(positionremove);
-//                            adapter.notifyDataSetChanged();
-//
-//                        }
-//                    });
-//
-//                    adb.show();
-//
-//                    //return false;
-//
-//                return false;
-//            }
-//
-//            });
-
 
         //MyCustomAdapter adapter = new MyCustomAdapter(this, hello);
         //
@@ -283,53 +259,66 @@ public class Home extends AppCompatActivity
 
     }
 
-//    class MyCustomAdapter extends ArrayAdapter{
-//
-//        String[] hellooArray;
-//
-//        public MyCustomAdapter(Context c, String[] hello1){
-//            super(c, R.layout.customlayout, R.id.textView, hello1);
-//            this.hellooArray=hello1;
-//
-//        }
-//
-//        @NotNull
-//        @Override
-//        public View getView( int position, View convertView, ViewGroup parent) {
-//            View view = convertView;
-//            //if (view == null) {
-//                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            view = inflater.inflate(R.layout.customlayout, parent, false);
-//           // }
-//
-//        TextView mytextView= (TextView)view.findViewById(R.id.textView);
-////        tvContact.setText(list.get(position));
-//
+    class MyAdapter extends ArrayAdapter{
+        ArrayList<String> applianceArray;
+        String[] numberArray;
+        String[] wattsArray;
+
+        public MyAdapter(Context c, String[] appliance1, String[] number1, String[] watts1){
+            super(c, R.layout.customlayout, R.id.appliance, appliance1);
+            //this.applianceArray=appliance1;
+            this.numberArray = number1;
+            this.wattsArray = watts1;
+
+        }
+
+        public MyAdapter(Context applicationContext, ArrayList<String> itemlist) {
+            super(applicationContext, R.layout.customlayout, R.id.appliance, itemlist);
+            this.applianceArray=itemlist;
+
+        }
+
+
+        @NotNull
+        @Override
+        public View getView( int position, View convertView, ViewGroup parent) {
+            View view = convertView;
+            //if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.customlayout, parent, false);
+           // }
+
+          TextView appliance= (TextView)view.findViewById(R.id.appliance);
+          //TextView number= (TextView)view.findViewById(R.id.number);
+          //TextView watts= (TextView)view.findViewById(R.id.watts);
+          appliance.setText(applianceArray.get(position));
+          //number.setText(numberArray[position]);
+          //watts.setText(wattsArray[position]);
+
 //            //Handle buttons and add onClickListeners
 //           // Switch callbtn = (Switch) view.findViewById(R.id.swtch);
-//
-//            mytextView.setText(hellooArray[position]);
-////
-////            callbtn.setOnClickListener(new View.OnClickListener(){
-////                @Override
-////                public void onClick(View v) {
-////                    //do something
-////
-////                }
-////            });
-////        addBtn.setOnClickListener(new View.OnClickListener(){
-////            @Override
-////            public void onClick(View v) {
-////                //do something
-////                notifyDataSetChanged();
-////
-////            }
-////        });
-//
-//            return view;
-//        }
 
-    //}
+//
+//            callbtn.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v) {
+//                    //do something
+//
+//                }
+//            });
+//        addBtn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                //do something
+//                notifyDataSetChanged();
+//
+//            }
+//        });
+
+            return view;
+        }
+
+    }
 
     @Override
     public void onBackPressed() {

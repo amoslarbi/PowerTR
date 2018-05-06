@@ -14,6 +14,13 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.jjoe64.graphview.series.Series;
+import com.jjoe64.graphview.series.BaseSeries;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 /**
  * Created by kh$y on 5/5/2018.
@@ -27,6 +34,7 @@ public class Tab3 extends Fragment {
     TextView tx, cou;
     double sum;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -38,8 +46,22 @@ public class Tab3 extends Fragment {
         tx = (TextView) view.findViewById(R.id.tx);
         cou = (TextView) view.findViewById(R.id.cou);
 
-        ch.setBase(SystemClock.elapsedRealtime());
-        ch.start();
+        GraphView graph = (GraphView) view.findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 6),
+                new DataPoint(4, 8),
+                new DataPoint(5, 11),
+                new DataPoint(6, 13)
+        });
+        graph.addSeries(series);
+
+//        ch.setBase(SystemClock.elapsedRealtime());
+//        ch.start();
+
+
 
         Thread t = new Thread(){
             public void run(){
@@ -54,8 +76,12 @@ public class Tab3 extends Fragment {
                                 tx.setText(String.valueOf(count));
 
                                 double hello = Double.parseDouble(tx.getText().toString());
-                                sum = hello + 100;
+                                sum = hello/60;
                                 cou.setText(Double.toString(sum));
+
+                                String lol = cou.getText().toString();
+                                Toast.makeText(getActivity(), lol,
+                                        Toast.LENGTH_SHORT).show();
 
                             }
                         });
