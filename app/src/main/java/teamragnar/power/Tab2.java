@@ -41,9 +41,9 @@ public class Tab2 extends Fragment {
         list = (ListView) view.findViewById(R.id.list);
         tbtn = (Button) view.findViewById(R.id.tbtn);
 
-        tbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        tbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 
         //Method to start the service
         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_SMS);
@@ -58,9 +58,9 @@ public class Tab2 extends Fragment {
 
         }
 
-
-            }
-        });
+//
+//            }
+//        });
         return view;
 
     }
