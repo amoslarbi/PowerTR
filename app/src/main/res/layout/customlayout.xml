@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/appliance"
+        android:id="@+id/appliance1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -11,7 +11,38 @@
         android:layout_marginStart="37dp"
         android:layout_marginTop="4dp"
         android:textColor="#000000"
-        android:textSize="20dp"
+        android:textSize="17dp"
+        android:text="Name of Appliance: " />
+
+    <TextView
+        android:id="@+id/number1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/appliance1"
+        android:layout_below="@+id/appliance1"
+        android:layout_marginTop="2dp"
+        android:textColor="#000000"
+        android:text="Socket Number: " />
+
+    <TextView
+        android:id="@+id/watts1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/number1"
+        android:layout_below="@+id/number1"
+        android:textColor="#000000"
+        android:layout_marginTop="2dp"
+        android:text="Watts Consumption: " />
+
+    <TextView
+        android:id="@+id/appliance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/appliance1"
+        android:layout_marginStart="22dp"
+        android:layout_toEndOf="@+id/appliance1"
+        android:textColor="#000000"
+        android:textSize="17dp"
         android:text="TextView" />
 
     <TextView
@@ -19,8 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/appliance"
-        android:layout_below="@+id/appliance"
-        android:layout_marginTop="2dp"
+        android:layout_alignTop="@+id/number1"
         android:textColor="#000000"
         android:text="TextView" />
 
@@ -29,10 +59,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/number"
-        android:layout_below="@+id/number"
+        android:layout_alignTop="@+id/watts1"
         android:textColor="#000000"
-        android:layout_marginTop="2dp"
         android:text="TextView" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView6"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignEnd="@+id/textView4"-->
+        <!--android:layout_alignTop="@+id/number"-->
+        <!--android:text="TextView" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView10"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignStart="@+id/textView6"-->
+        <!--android:layout_below="@+id/watts"-->
+        <!--android:text="TextView" />-->
 
 
 </RelativeLayout>

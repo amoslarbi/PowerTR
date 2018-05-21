@@ -25,6 +25,9 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/socket1"
         android:supportsRtl="true"
+        tools:replace="android:icon"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -40,38 +43,63 @@
             android:name=".SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:screenOrientation="portrait" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Terms"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
+        <!--<activity-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustNothing" />-->
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
-         <service
-         android:name=".MyService"
-         android:enabled="true"
-         android:exported="true" />
+        <!-- <service -->
+        <!-- android:name=".MyService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" /> -->
 
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN"
-                    android:screenOrientation="portrait" />
-            </intent-filter>
+
         </activity>
+
         <activity
             android:name=".Play"
             android:label="@string/title_activity_play"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme">
+
+        </activity>
+
+        <activity android:name=".work"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            >
+
+        </activity>
+
+        <activity android:name=".Aboutus"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            >
+
+        </activity>
+
+        <activity android:name=".Userguide"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            >
+
+        </activity>
+
+
     </application>
 
 </manifest>

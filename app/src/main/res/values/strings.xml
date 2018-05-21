@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Power</string>
+    <string name="app_name"></string>
     <string name="cam">take a photo</string>
     <string name="sdcard">Chose photo from gallery</string>
     <string name="title_activity_home"></string>

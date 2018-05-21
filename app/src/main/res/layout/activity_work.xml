@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="teamragnar.power.work">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+
+
+<TextView
+        android:id="@+id/tx3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="27dp"
+        android:layout_toEndOf="@+id/ch"
+        android:visibility="invisible"
+        android:text="2aaaaaaaaaaa" />
+
+    <TextView
+        android:id="@+id/bnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="27dp"
+        android:layout_toEndOf="@+id/ch"
+        android:visibility="invisible"
+        android:text="a" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="17dp"
+        android:textColor="#ffffff"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="21dp"
+        android:textSize="14dp"
+        android:text="Use switch to turn appliance on/off" />
+
+    <ToggleButton
+        android:id="@+id/tbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_alignBaseline="@+id/textView3"
+        android:text="ToggleButton" />
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/graph"
+        android:layout_above="@+id/num"
+        android:layout_marginTop="106dp"
+
+    />
+
+    <TextView
+        android:id="@+id/num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        android:text="0552884145" />
+
+    <TextView
+        android:id="@+id/msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp"
+        android:visibility="invisible"
+        android:text="#ISIKk" />
+
+    <TextView
+        android:id="@+id/msgoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp"
+        android:visibility="invisible"
+        android:text="#ISIKa" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/num"
+        android:background="#ffffff"
+        >
+
+        <TextView
+            android:id="@+id/yh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView117"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:text="Time"
+            />
+
+        <Chronometer
+            android:id="@+id/textView117"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:textSize="40dp"
+            android:countDown="true"
+            />
+
+        <TextView
+            android:id="@+id/yhyh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_above="@+id/yhy"
+            android:layout_marginLeft="3dp"
+            android:textSize="20dp"
+            android:text="W/h"
+            />
+
+        <TextView
+            android:id="@+id/yhy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="40dp"
+            android:text="00"
+            android:maxLength="5"
+            android:textColor="#000000"
+            />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="52dp"
+            android:layout_marginLeft="20dp"
+            android:layout_above="@+id/textVw117"
+            android:text="Time = Duration appliance has been active"
+
+            />
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="36dp"
+            android:layout_marginLeft="20dp"
+            android:layout_above="@+id/textVw117"
+            android:text="w/h = Amount of watts consumed per hour"
+
+            />
+
+        <TextView
+            android:id="@+id/teext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_above="@+id/textVw117"
+            android:text="T/Ghc = Consumption Tariffs per Ghana Cedis"
+
+            />
+
+        <TextView
+            android:id="@+id/textV21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/textVw117"
+            android:layout_marginRight="26dp"
+            android:layout_alignParentStart="@+id/textVw117"
+            android:textSize="20dp"
+            android:text="Ghc"
+            />
+
+        <TextView
+            android:id="@+id/textVw117"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:textSize="40dp"
+            android:countDown="true"
+            android:text="00"
+            android:textColor="#000000"
+            />
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            >
+
+        </ListView>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

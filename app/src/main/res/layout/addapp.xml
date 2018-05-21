@@ -78,7 +78,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="280dp"
             android:layout_marginLeft="12dip"
             android:layout_marginRight="12dip"
             android:id="@+id/relativeLayout"
@@ -92,13 +92,27 @@
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
-                android:layout_marginBottom="10dip"
+                android:layout_marginTop="70dp"
                 android:ems="10"
-                android:hint="Add Appliance"
+                android:hint="Name Of Appliance"
                 android:inputType="textPersonName"
+
+                />
+
+            <EditText
+                android:id="@+id/watts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editText"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:ems="10"
+                android:layout_marginTop="20dp"
+                android:hint="Input socket Number"
+                android:inputType="phone"
+                android:text=""
 
                 />
 
@@ -106,28 +120,15 @@
                 android:id="@+id/num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editText"
+                android:layout_below="@+id/watts"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
                 android:ems="10"
-                android:hint="Input socket Number"
+                android:layout_marginTop="20dp"
+                android:hint="Input Watts Consumption"
                 android:inputType="phone"
 
                 />
-
-
-            <!--<Button-->
-                <!--android:id="@+id/button3"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:layout_alignParentLeft="true"-->
-               <!--android:layout_alignParentBottom="true"-->
-                <!--android:background="@color/colorAccent"-->
-                <!--android:textColor="@android:color/white"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:text="Post Suggestion" />-->
 
         </RelativeLayout>
 

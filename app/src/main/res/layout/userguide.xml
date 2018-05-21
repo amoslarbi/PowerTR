@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/userguide3"
+
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+
+        >
+
+
+        <TextView
+            android:id="@+id/textView232"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="User guide for Power"
+            android:textSize="16sp"
+            android:layout_marginTop="6dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#3b5998"
+            android:textStyle="bold" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image3View3"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:src="@drawable/signup"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="41dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:overScrollMode="never"
+
+            />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="Signing Up"
+            android:textSize="20sp"
+            android:layout_marginTop="23dp"
+            android:textColor="#3b5998"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/image3View3"
+            android:layout_toRightOf="@+id/image3View3"
+            android:layout_toEndOf="@+id/image3View3"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp" />
+
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:fontFamily="serif-monospace"
+            android:layout_marginLeft="1dp"
+            android:layout_marginStart="1dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="Sign up with your google account..." />
+
+
+        <TextView
+            android:id="@+id/textView312"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="Tap on the button on the bottom left hand corner to add new appliance, In adding new appliance you are to input the appliance name, socket number and number of watts the appliance consumes per hour..."
+            android:textSize="16sp"
+            android:layout_below="@+id/textView33"
+            android:layout_alignRight="@+id/textView2"
+            android:layout_alignEnd="@+id/textView2"
+            android:textStyle="bold"
+            android:layout_marginLeft="6dip"
+
+            />
+
+        <ImageView
+            android:id="@+id/imageView32"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/listview"
+            android:overScrollMode="never"
+            android:layout_marginTop="-10dp"
+            android:layout_below="@+id/textView33"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="Add appliance"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="6dip"
+            android:layout_below="@+id/image3View3"
+            android:textColor="#3b5998"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="After successfully adding new appliance you should be able to see the appliance in the listview on the dashboard; select the type of appliance you want to use remotely from the listview... "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="-30dp"
+            android:layout_above="@+id/textViewpn"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageViewmor"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/work"
+            android:layout_marginTop="70dp"
+            android:overScrollMode="never"
+            android:layout_below="@+id/textView312"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/textViewpn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="You can view user profile, Logout and read about power when you tap on the three horizontal lines on the top left hand corner."
+            android:textSize="16sp"
+            android:layout_marginLeft="6dip"
+            android:layout_below="@+id/imageViewmor"
+            android:layout_marginTop="60dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/textView331"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="Board confirmation"
+            android:textSize="20sp"
+            android:layout_marginTop="26dp"
+            android:textColor="#3b5998"
+            android:layout_below="@+id/textViewpn"
+            android:layout_marginLeft="6dip"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/textViewvpn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:text="Wait about four to five seconds for confirmation from the board saying success your board number is activated; then you are ready to use appliance...else check board number properly from the box and return to step 2."
+            android:textSize="16sp"
+            android:layout_below="@+id/textView331"
+            android:layout_marginLeft="6dip"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/imageViewmor33"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/activeboard"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="18dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_below="@+id/textViewvpn"
+            android:overScrollMode="never"
+
+            />
+
+        <!--<TextView-->
+            <!--android:id="@+id/gotit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="serif-monospace"-->
+            <!--android:text="Got it"-->
+            <!--android:textSize="16sp"-->
+            <!--android:layout_marginTop="40dp"-->
+            <!--android:textColor="#3b5998"-->
+            <!--android:layout_marginRight="10dip"-->
+            <!--android:layout_below="@+id/imageViewmor33"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:textStyle="bold" />-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/textView331m"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="serif-monospace"-->
+            <!--android:text="Got it"-->
+            <!--android:textSize="24sp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:layout_below="@+id/gotit"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:textStyle="bold" />-->
+
+    </RelativeLayout>
+
+
+</ScrollView>

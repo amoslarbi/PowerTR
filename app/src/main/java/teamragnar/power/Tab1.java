@@ -79,6 +79,8 @@ public class Tab1 extends android.support.v4.app.Fragment {
 
 
         return view;
+
+
     }
 
 

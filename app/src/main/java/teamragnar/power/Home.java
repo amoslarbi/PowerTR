@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -44,6 +45,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
@@ -51,18 +56,23 @@ public class Home extends AppCompatActivity
     ListView listView;
     SearchView search;
     FloatingActionButton aboutback;
-    EditText editText, editText1;
+    EditText editText, editText1, watts;
     ArrayList<String> itemlist;
-    String [] tt = {"hellol"};
-    //ArrayAdapter<String> adapter;
+    ArrayList<String> itemlist1;
+    ArrayList<String> itemlist2;
     MyAdapter adapter;
+
+    String lolo,lolos,loloss;
 
     private TextView names, wtf, hoover, larry;
     Uri imageUri;
     ImageView Uimmg;
     public static final String hello = "hellol";
+    public static final String qhello = "hellolol";
     private FirebaseAuth nAuth;
     private FirebaseAuth.AuthStateListener nAuthListener;
+
+    AlertDialog.Builder sett;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +81,25 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        nAuth = FirebaseAuth.getInstance();
+        nAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                if(firebaseAuth.getCurrentUser() == null){
+                    startActivity(new Intent(Home.this, MainActivity.class));
+                }
+            }
+        };
+
+
         listView = (ListView) findViewById(R.id.listview);
         itemlist = new ArrayList<>();
+        itemlist1 = new ArrayList<>();
+        itemlist2 = new ArrayList<>();
 
         //adapter = new ArrayAdapter<String>(Home.this, android.R.layout.simple_list_item_1, itemlist);
-        adapter = new MyAdapter(getApplicationContext(), itemlist);
+        adapter = new MyAdapter(getApplicationContext(), itemlist, itemlist1, itemlist2);
         listView.setAdapter(adapter);
 
         registerForContextMenu(listView);
@@ -88,11 +112,15 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder sett = new AlertDialog.Builder(Home.this);
+                sett = new AlertDialog.Builder(Home.this);
                 final View mview = getLayoutInflater().inflate(R.layout.addapp,null);
                  editText = (EditText) mview.findViewById(R.id.editText);
-                 editText1 = (EditText) mview.findViewById(R.id.num);
+                 watts = (EditText) mview.findViewById(R.id.num);
+                 editText1 = (EditText) mview.findViewById(R.id.watts);
+
                 FloatingActionButton sposted = (FloatingActionButton) mview.findViewById(R.id.button3);
+                sett.setView(mview);
+                final AlertDialog dialog = sett.create();
 
                 sposted.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -101,6 +129,7 @@ public class Home extends AppCompatActivity
                         String str3 = editText.getText().toString();
                         String send = editText1.getText().toString().trim();
                         String send1 = editText1.getText().toString();
+                        String send3 = watts.getText().toString();
 
                         if (TextUtils.isEmpty(str3)) {
                             editText.setError("Field cant be Empty");
@@ -114,63 +143,96 @@ public class Home extends AppCompatActivity
                             return;
                         }
 
-//                        if(TextUtils.isDigitsOnly(send)){
-//
-//
-//                        }
+                        if (TextUtils.isEmpty(send3)) {
+                            watts.setError("Field cant be Empty");
+                            watts.requestFocus();
+                            return;
+                        }
 
                         else{
 
                             itemlist.add(editText.getText().toString());
-                            editText.setText("");
-                            adapter.notifyDataSetChanged();
-                            Toast.makeText(getApplicationContext(), "Appliance Added", Toast.LENGTH_SHORT).show();
+                            itemlist1.add(editText1.getText().toString());
+                            itemlist2.add(watts.getText().toString());
+
+                            lolo = editText.getText().toString();
+                            lolos = editText1.getText().toString();
+                            loloss = watts.getText().toString();
+
+                            String list = editText.getText().toString();
+                            String list1 = editText1.getText().toString();
+                            String list2 = watts.getText().toString();
+
+                            //Toast.makeText(getApplicationContext(), list, Toast.LENGTH_SHORT).show();
+
+//                            SharedPreferences sh1 = getSharedPreferences(qhello , 0);
+//                            SharedPreferences.Editor edit = sh1.edit();
+//                            Set<String> set = new HashSet<String>();
+//                            set.addAll(itemlist);
+//                            set.addAll(itemlist1);
+//                            set.addAll(itemlist2);
+//                            edit.putStringSet("DATE_LIST", set);
+//
+//                            edit.commit();
+//
+//                            SharedPreferences shs = getSharedPreferences(qhello, 0);
+//                            Set<String> sett = shs.getStringSet("DATE_LIST", null);
+//                            itemlist.addAll(sett);
+//                            itemlist1.addAll(sett);
+//                            itemlist2.addAll(sett);
+
+                            //itemlist.add(get);
+
+
+                            //Toast.makeText(getApplicationContext(), get, Toast.LENGTH_SHORT).show();
+
+                            //Toast.makeText(getApplicationContext(), get, Toast.LENGTH_SHORT).show();
                             editText.setText("");
                             editText1.setText("");
+                            watts.setText("");
+                            adapter.notifyDataSetChanged();
+
+                            SweetAlertDialog su = new SweetAlertDialog(Home.this,SweetAlertDialog.SUCCESS_TYPE);
+                            su.setTitleText("Appliance Added");
+                            su.show();
+
+                            dialog.dismiss();
+
+//                            sett.setView(mview);
+//                            AlertDialog dialog = sett.create();
+//                            dialog.dismiss();
+//                            mview.setVisibility(View.GONE);
+
+                            //Toast.makeText(getApplicationContext(), "Appliance Added", Toast.LENGTH_SHORT).show();
+
                         }
 
                     }
                 });
 
-                sett.setView(mview);
-                AlertDialog dialog = sett.create();
+//                sett.setView(mview);
+//                AlertDialog dialog = sett.create();
                 dialog.show();
 
             }
         });
 
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                SparseBooleanArray positionc = listView.getCheckedItemPositions();
-//
-//                int count = listView.getCount();
-//                for(int item = count -1; item >=0; item--) {
-//
-//                    if (positionc.get(item)) {
-//
-//                        adapter.remove(itemlist.get(item));
-//
-//                    }
-//
-//                }
-//                positionc.clear();
-//
-//                adapter.notifyDataSetChanged();
-//
-//                return false;
-//
-//
-//            }
-//        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
 
                 String food = String.valueOf(parent.getItemAtPosition(position));
-                Toast.makeText(getApplicationContext(), food, Toast.LENGTH_SHORT).show();
-                Intent StartIntent = new Intent(getApplicationContext(), Play.class);
+                //Toast.makeText(getApplicationContext(), food, Toast.LENGTH_SHORT).show();
+                Intent StartIntent = new Intent(getApplicationContext(), work.class);
+
+                StartIntent.putExtra("appliance",lolo);
+                StartIntent.putExtra("numoo",lolos);
+                StartIntent.putExtra("watts",loloss);
+                StartIntent.putExtra("food",food);
+
+
+
                 startActivity(StartIntent);
 
             }
@@ -195,14 +257,10 @@ public class Home extends AppCompatActivity
         names = (TextView) hvv.findViewById(R.id.name);
         wtf = (TextView) hvv.findViewById(R.id.email);
         Uimmg = (ImageView) hvv.findViewById(R.id.Uimmg);
-
-//        names = (TextView) findViewById(R.id.name);
-//        wtf = (TextView) findViewById(R.id.email);
         hoover = (TextView) findViewById(R.id.hoover);
 
         names.setText(getIntent().getStringExtra("nm"));
         wtf.setText(getIntent().getStringExtra("em"));
-        //hoover.setText(getIntent().getStringExtra("larry"));
 
         SharedPreferences sh = getSharedPreferences(hello, 0);
         names.setText(sh.getString("nmm", "nmoo"));
@@ -210,13 +268,11 @@ public class Home extends AppCompatActivity
         hoover.setText(sh.getString("nmmaa", "nmoo2"));
 
         String lolo = hoover.getText().toString();
-
         Uri c = Uri.parse(lolo);
         Picasso.with(getApplicationContext()).load(c).into(Uimmg);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
 
     }
@@ -261,20 +317,15 @@ public class Home extends AppCompatActivity
 
     class MyAdapter extends ArrayAdapter{
         ArrayList<String> applianceArray;
-        String[] numberArray;
-        String[] wattsArray;
+        ArrayList<String> numberArray;
+        ArrayList<String> wattsArray;
 
-        public MyAdapter(Context c, String[] appliance1, String[] number1, String[] watts1){
-            super(c, R.layout.customlayout, R.id.appliance, appliance1);
-            //this.applianceArray=appliance1;
-            this.numberArray = number1;
-            this.wattsArray = watts1;
 
-        }
-
-        public MyAdapter(Context applicationContext, ArrayList<String> itemlist) {
+        public MyAdapter(Context applicationContext, ArrayList<String> itemlist, ArrayList<String> itemlist1, ArrayList<String> itemlist2) {
             super(applicationContext, R.layout.customlayout, R.id.appliance, itemlist);
             this.applianceArray=itemlist;
+            this.numberArray=itemlist1;
+            this.wattsArray=itemlist2;
 
         }
 
@@ -289,31 +340,11 @@ public class Home extends AppCompatActivity
            // }
 
           TextView appliance= (TextView)view.findViewById(R.id.appliance);
-          //TextView number= (TextView)view.findViewById(R.id.number);
-          //TextView watts= (TextView)view.findViewById(R.id.watts);
+          TextView number= (TextView)view.findViewById(R.id.number);
+          TextView watts= (TextView)view.findViewById(R.id.watts);
           appliance.setText(applianceArray.get(position));
-          //number.setText(numberArray[position]);
-          //watts.setText(wattsArray[position]);
-
-//            //Handle buttons and add onClickListeners
-//           // Switch callbtn = (Switch) view.findViewById(R.id.swtch);
-
-//
-//            callbtn.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//                    //do something
-//
-//                }
-//            });
-//        addBtn.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                //do something
-//                notifyDataSetChanged();
-//
-//            }
-//        });
+          number.setText(numberArray.get(position));
+          watts.setText(wattsArray.get(position));
 
             return view;
         }
@@ -322,12 +353,15 @@ public class Home extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
+        //finish();
+
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -336,13 +370,25 @@ public class Home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.home) {
 
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.aboutus) {
+
+            Intent StartIntent = new Intent(getApplicationContext(), Aboutus.class);
+
+            startActivity(StartIntent);
+
+        } else if (id == R.id.userguide) {
+
+            Intent StartIntent = new Intent(getApplicationContext(), Userguide.class);
+
+            startActivity(StartIntent);
+
+        } else if (id == R.id.logout) {
+
+            nAuth.signOut();
 
         }
 
@@ -354,7 +400,16 @@ public class Home extends AppCompatActivity
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        nAuth.addAuthStateListener(nAuthListener);
+
 
 
     }
+
+
 }

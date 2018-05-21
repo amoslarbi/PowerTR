@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class Play extends AppCompatActivity {
 
     /**
@@ -35,11 +37,17 @@ public class Play extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    TextView num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+
+        num = (TextView) findViewById(R.id.num);
+
+        //names.setText(getIntent().getStringExtra("nm"));
+        //wtf.setText(getIntent().getStringExtra("em"));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

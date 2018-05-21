@@ -62,7 +62,6 @@ public class Tab3 extends Fragment {
 //        ch.start();
 
 
-
         Thread t = new Thread(){
             public void run(){
                 while(!isInterrupted()){
@@ -79,9 +78,9 @@ public class Tab3 extends Fragment {
                                 sum = hello/60;
                                 cou.setText(Double.toString(sum));
 
-                                String lol = cou.getText().toString();
-                                Toast.makeText(getActivity(), lol,
-                                        Toast.LENGTH_SHORT).show();
+//                                String lol = cou.getText().toString();
+//                                Toast.makeText(getActivity(), lol,
+//                                        Toast.LENGTH_SHORT).show();
 
                             }
                         });
